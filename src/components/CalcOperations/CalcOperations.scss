@@ -1,0 +1,7 @@
+.operations {
+    display: flex;
+    justify-content: space-between;
+    & > button {
+        flex-basis: 22.4%;
+    }
+}

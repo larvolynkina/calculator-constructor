@@ -1,0 +1,19 @@
+.constructor {
+    padding: 38px 80px 54px 76px;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__blocks {
+        flex-basis: 44.5%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__canvas {
+        flex-basis: 45%;
+    }
+}
