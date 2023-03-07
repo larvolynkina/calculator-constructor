@@ -3,6 +3,7 @@ import CalcDisplay from '../../components/CalcDisplay';
 import CalcOperations from '../../components/CalcOperations';
 import CalcDigits from '../../components/CalcDigits';
 import CalcEqual from '../../components/CalcEqual';
+import Canvas from '../../components/Canvas';
 
 function Constructor() {
   return (
@@ -14,7 +15,9 @@ function Constructor() {
           <CalcDigits />
           <CalcEqual />
         </div>
-        <div className="constructor__canvas">Canvas</div>
+        <div className="constructor__canvas">
+          <Canvas />
+        </div>
       </div>
     </div>
   );
