@@ -1,12 +1,7 @@
 import './CalcDisplay.scss';
-import CalcBlock from '../UI/CalcBlock/CalcBlock';
 
 function CalcDisplay() {
-  return (
-    <CalcBlock>
-      <div className='display'>0</div>
-    </CalcBlock>
-  );
+  return <div className="display">0</div>;
 }
 
 export default CalcDisplay;
