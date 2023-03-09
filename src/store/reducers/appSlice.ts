@@ -24,9 +24,12 @@ const appSlice = createSlice({
     updateDraggbleElement(state, action) {
       state.draggableElement = action.payload;
     },
+    updateMode(state, action) {
+      state.mode = action.payload;
+    },
   },
 });
 
-export const { updateCalcBlocks, updateDraggbleElement } = appSlice.actions;
+export const { updateCalcBlocks, updateDraggbleElement, updateMode } = appSlice.actions;
 
 export default appSlice.reducer;
