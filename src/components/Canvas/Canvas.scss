@@ -39,7 +39,6 @@
         justify-content: unset;
         align-items: unset;
         border: none;
-        gap: 8px;
     }
 
     &--drag-over {
@@ -49,5 +48,6 @@
     .calc-block {
         background: none;
         box-shadow: none;
+        padding: 8px 4px;
     }
 }
