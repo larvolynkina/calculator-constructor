@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import './CalcBlock.scss';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux';
+import { updateDraggbleElement } from '../../store/reducers/appSlice';
 
 interface CalcBlockProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ function CalcBlock({ children, draggable, id }: CalcBlockProps) {
   const [className, setClassName] = useState('calc-block');
   const [isDraggable, setIsDraggable] = useState(draggable);
   const calcBlocks = useAppSelector((state) => state.app.calcBlocks);
+  const dispatch = useAppDispatch();
 
   function handleDragStart(event: React.DragEvent<HTMLDivElement>) {
     const target = event.target as HTMLElement;
@@ -21,13 +23,18 @@ function CalcBlock({ children, draggable, id }: CalcBlockProps) {
     } else {
       event.dataTransfer.effectAllowed = 'move';
     }
+    dispatch(updateDraggbleElement(target));
     event.dataTransfer.setData('id', id);
   }
 
   function handleDragLeave(event: React.DragEvent<HTMLDivElement>) {
     const target = event.target as HTMLElement;
     if (target.id.includes('canvas')) {
-      target.className = 'calc-block';
+      if (!target.id.includes('display')) {
+        target.className = 'calc-block';
+      } else {
+        target.className = 'calc-block calc-block--no-grab';
+      }
     }
   }
 
@@ -36,6 +43,8 @@ function CalcBlock({ children, draggable, id }: CalcBlockProps) {
     if (id === 'display-canvas') {
       setClassName('calc-block calc-block--no-grab');
       setIsDraggable(false);
+    } else {
+      setClassName('calc-block');
     }
     if (!id.includes('canvas')) {
       if (current.length > 0) {

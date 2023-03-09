@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CalcBlock from '../UI/CalcBlock/CalcBlock';
+import CalcBlock from '../CalcBlock/CalcBlock';
 import CalcOperations from '../CalcOperations';
 import CalcEqual from '../CalcEqual';
 import CalcDigits from '../CalcDigits';
@@ -8,9 +8,9 @@ import './Canvas.scss';
 import CanvasPrompt from './CanvasPrompt';
 import ICalcBlocks from '../../types';
 import { updateCalcBlocks } from '../../store/reducers/appSlice';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
-const allCalcBlocks: ICalcBlocks[] = [
+export const allCalcBlocks: ICalcBlocks[] = [
   {
     element: <CalcDisplay />,
     id: 'display',
@@ -33,6 +33,7 @@ function Canvas() {
   const [calcBlocks, setCalcBlocks] = useState<ICalcBlocks[]>([]);
   const [className, setClassName] = useState('canvas');
   const dispatch = useAppDispatch();
+  const draggableElement = useAppSelector((state) => state.app.draggableElement);
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -44,16 +45,20 @@ function Canvas() {
     const target = event.target as HTMLElement;
     const targetParams = target.getBoundingClientRect();
     const targetCenter = targetParams.y + targetParams.height / 2;
-
-    if (target.id.includes('canvas')) {
-      if (event.clientY > targetCenter) {
-        target.className = 'calc-block calc-block--after';
-      } else if (target.id !== 'display-canvas') {
-        target.className = 'calc-block calc-block--before';
+    if (draggableElement && draggableElement.id !== target.id) {
+      if (target.id.includes('canvas')) {
+        if (event.clientY > targetCenter) {
+          target.className = 'calc-block calc-block--after';
+        } else if (target.id !== 'display-canvas') {
+          target.className = 'calc-block calc-block--before';
+        }
       }
     }
-
-    if (target.className.includes('canvas--with-blocks') && calcBlocks.length) {
+    if (
+      target.className.includes('canvas--with-blocks') &&
+      calcBlocks.length &&
+      calcBlocks.length < 4
+    ) {
       const lastChild = Array.from(target.children).at(-1);
       if (lastChild) {
         lastChild.className = 'calc-block calc-block--after';
@@ -80,45 +85,32 @@ function Canvas() {
       dispatch(
         updateCalcBlocks([{ element: <CalcDisplay />, id: 'display-canvas' }, ...calcBlocks]),
       );
-    }
-    if ((id === 'digits' || id === 'operations' || id === 'equal') && !calcBlocks.length) {
+    } else if ((id === 'digits' || id === 'operations' || id === 'equal') && !calcBlocks.length) {
       const currentBlock = allCalcBlocks.find((item) => item.id === id);
       if (currentBlock) {
         setCalcBlocks([{ element: currentBlock.element, id: `${id}-canvas` }]);
         dispatch(updateCalcBlocks([{ element: currentBlock.element, id: `${id}-canvas` }]));
       }
-    }
-    if (
+    } else if (
       (id === 'digits' || id === 'operations' || id === 'equal') &&
-      event.clientY > targetCenter &&
       target.id.includes('canvas')
     ) {
       const calcBlocksCopy = [...calcBlocks];
       const currentBlock = allCalcBlocks.find((item) => item.id === id);
       const index = calcBlocks.findIndex((item) => item.id === target.id);
       if (currentBlock) {
-        calcBlocksCopy.splice(index + 1, 0, { element: currentBlock.element, id: `${id}-canvas` });
+        if (event.clientY > targetCenter) {
+          calcBlocksCopy.splice(index + 1, 0, {
+            element: currentBlock.element,
+            id: `${id}-canvas`,
+          });
+        } else if (target.id !== 'display-canvas') {
+          calcBlocksCopy.splice(index, 0, { element: currentBlock.element, id: `${id}-canvas` });
+        }
       }
       setCalcBlocks(calcBlocksCopy);
       dispatch(updateCalcBlocks(calcBlocksCopy));
-      target.className = 'calc-block';
-    }
-    if (
-      (id === 'digits' || id === 'operations' || id === 'equal') &&
-      event.clientY < targetCenter &&
-      target.id.includes('canvas')
-    ) {
-      const calcBlocksCopy = [...calcBlocks];
-      const currentBlock = allCalcBlocks.find((item) => item.id === id);
-      const index = calcBlocks.findIndex((item) => item.id === target.id);
-      if (currentBlock) {
-        calcBlocksCopy.splice(index, 0, { element: currentBlock.element, id: `${id}-canvas` });
-      }
-      setCalcBlocks(calcBlocksCopy);
-      dispatch(updateCalcBlocks(calcBlocksCopy));
-      target.className = 'calc-block';
-    }
-    if (
+    } else if (
       (id === 'digits' || id === 'operations' || id === 'equal') &&
       target.className.includes('canvas--with-blocks')
     ) {
@@ -126,13 +118,60 @@ function Canvas() {
       if (currentBlock) {
         const lastChild = Array.from(target.children).at(-1);
         if (lastChild) {
-          lastChild.className = 'calc-block';
+          if (lastChild.id.includes('display')) {
+            lastChild.className = 'calc-block calc-block--no-grab';
+          } else {
+            lastChild.className = 'calc-block';
+          }
         }
         setCalcBlocks([...calcBlocks, { element: currentBlock.element, id: `${id}-canvas` }]);
         dispatch(
           updateCalcBlocks([...calcBlocks, { element: currentBlock.element, id: `${id}-canvas` }]),
         );
       }
+    } else if (
+      id.includes('canvas') &&
+      id !== 'display-canvas' &&
+      target.id.includes('canvas') &&
+      target.id !== id
+    ) {
+      const targetIndex = calcBlocks.findIndex((item) => item.id === target.id);
+      const draggableIndex = calcBlocks.findIndex((item) => item.id === id);
+      const calcBlocksCopy = [...calcBlocks];
+      const draggable = allCalcBlocks.filter((item) => id.includes(item.id));
+      const targetElement = allCalcBlocks.filter((item) => target.id.includes(item.id));
+
+      if (!target.id.includes('display')) {
+        if (
+          (targetIndex - draggableIndex === 1 && event.clientY > targetCenter) ||
+          (draggableIndex - targetIndex === 1 && event.clientY < targetCenter)
+        ) {
+          calcBlocksCopy[draggableIndex] = { element: targetElement[0].element, id: target.id };
+          calcBlocksCopy[targetIndex] = { element: draggable[0].element, id };
+          setCalcBlocks(calcBlocksCopy);
+          dispatch(updateCalcBlocks(calcBlocksCopy));
+        }
+        if (targetIndex - draggableIndex === 2 && event.clientY < targetCenter) {
+          setCalcBlocks([calcBlocks[0], calcBlocks[2], calcBlocks[1], calcBlocks[3]]);
+          dispatch(updateCalcBlocks([calcBlocks[2], calcBlocks[1], calcBlocks[3], calcBlocks[1]]));
+        }
+        if (targetIndex - draggableIndex === 2 && event.clientY > targetCenter) {
+          setCalcBlocks([calcBlocks[0], calcBlocks[2], calcBlocks[3], calcBlocks[1]]);
+          dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[2], calcBlocks[3], calcBlocks[1]]));
+        }
+        if (draggableIndex - targetIndex === 2 && event.clientY < targetCenter) {
+          setCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]);
+          dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]));
+        }
+      } else if (draggableIndex - targetIndex === 3 && event.clientY > targetCenter) {
+        setCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]);
+        dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]));
+      }
+    }
+    if (target.id.includes('display')) {
+      target.className = 'calc-block calc-block--no-grab';
+    } else if (target.id.includes('canvas')) {
+      target.className = 'calc-block';
     }
   }
 
@@ -152,6 +191,8 @@ function Canvas() {
   useEffect(() => {
     if (calcBlocks.length) {
       setClassName('canvas canvas--with-blocks');
+    } else {
+      setClassName('canvas');
     }
   }, [calcBlocks]);
 
