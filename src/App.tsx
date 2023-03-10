@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import Constructor from './views/Constructor/Constructor';
-import Runtime from './views/Runtime/Runtime';
+import Constructor from './views/Constructor';
+import Runtime from './views/Runtime';
 import { useAppSelector } from './hooks/redux';
 import Mode from './const';
 import Switcher from './components/Switcher';

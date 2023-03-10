@@ -1,7 +1,30 @@
 import './Constructor.scss';
 import CalcBlock from '../../components/CalcBlock/CalcBlock';
 import Canvas from '../../components/Canvas';
-import { allCalcBlocks } from '../../components/Canvas/Canvas';
+import CalcDisplay from '../../components/CalcDisplay';
+import CalcDigits from '../../components/CalcDigits';
+import CalcEqual from '../../components/CalcEqual';
+import CalcOperations from '../../components/CalcOperations';
+import ICalcBlocks from '../../types';
+
+export const allCalcBlocks: ICalcBlocks[] = [
+  {
+    element: <CalcDisplay />,
+    id: 'display',
+  },
+  {
+    element: <CalcOperations />,
+    id: 'operations',
+  },
+  {
+    element: <CalcDigits />,
+    id: 'digits',
+  },
+  {
+    element: <CalcEqual />,
+    id: 'equal',
+  },
+];
 
 function Constructor() {
   return (
