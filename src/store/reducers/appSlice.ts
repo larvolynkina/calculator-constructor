@@ -1,17 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
-import Mode from '../../const';
+import { Mode } from '../../const';
 import ICalcBlocks from '../../types';
 
 type TinitialState = {
   mode: Mode;
   calcBlocks: ICalcBlocks[];
-  draggableElement: null | HTMLElement;
+  draggableElement: HTMLElement | null;
+  currentValue: string | null;
+  displayValue: string;
+  firstOperand: number | null;
+  secondOperand: number | null;
+  operator: string | null;
 };
 
 const initialState: TinitialState = {
   mode: Mode.build,
   calcBlocks: [],
   draggableElement: null,
+  currentValue: null,
+  displayValue: '',
+  firstOperand: null,
+  secondOperand: null,
+  operator: null,
 };
 
 const appSlice = createSlice({
@@ -27,9 +37,33 @@ const appSlice = createSlice({
     updateMode(state, action) {
       state.mode = action.payload;
     },
+    updateCurrentValue(state, action) {
+      state.currentValue = action.payload;
+    },
+    updateDisplayValue(state, action) {
+      state.displayValue = action.payload;
+    },
+    updateFirtsOperand(state, action) {
+      state.firstOperand = action.payload;
+    },
+    updateSecondOperand(state, action) {
+      state.secondOperand = action.payload;
+    },
+    updateOperator(state, action) {
+      state.operator = action.payload;
+    },
   },
 });
 
-export const { updateCalcBlocks, updateDraggbleElement, updateMode } = appSlice.actions;
+export const {
+  updateCalcBlocks,
+  updateDraggbleElement,
+  updateMode,
+  updateCurrentValue,
+  updateDisplayValue,
+  updateFirtsOperand,
+  updateSecondOperand,
+  updateOperator,
+} = appSlice.actions;
 
 export default appSlice.reducer;

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Constructor from './views/Constructor';
 import Runtime from './views/Runtime';
 import { useAppSelector } from './hooks/redux';
-import Mode from './const';
+import { Mode } from './const';
 import Switcher from './components/Switcher';
 
 function App() {

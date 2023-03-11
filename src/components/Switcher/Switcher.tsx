@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './Switcher.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { updateMode } from '../../store/reducers/appSlice';
+import {
+  updateMode,
+  updateCurrentValue,
+  updateDisplayValue,
+  updateFirtsOperand,
+  updateSecondOperand,
+  updateOperator,
+} from '../../store/reducers/appSlice';
 
 function Switcher() {
   const mode = useAppSelector((state) => state.app.mode);
@@ -23,6 +30,11 @@ function Switcher() {
     if (mode === 'constructor') {
       setConstructorBtnClassName('switcher__button switcher__button--active');
       setCalculatorBtnClassName('switcher__button');
+      dispatch(updateCurrentValue(null));
+      dispatch(updateDisplayValue(''));
+      dispatch(updateFirtsOperand(null));
+      dispatch(updateSecondOperand(null));
+      dispatch(updateOperator(null));
     } else {
       setConstructorBtnClassName('switcher__button');
       setCalculatorBtnClassName('switcher__button switcher__button--active');

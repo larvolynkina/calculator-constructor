@@ -2,13 +2,14 @@ import React from 'react';
 import './CalcButton.scss';
 
 interface CalcButtonProps {
-  children: React.ReactNode;
+  children: string;
   className?: string;
+  onClick: (children: string) => void;
 }
 
-function CalcButton({ children, className }: CalcButtonProps) {
+function CalcButton({ children, className, onClick }: CalcButtonProps) {
   return (
-    <button className={className} type="button">
+    <button onClick={() => onClick(children)} className={className} type="button">
       {children}
     </button>
   );
