@@ -14,11 +14,13 @@ import {
 } from '../../utils';
 
 function CalcEqual() {
+  const {
+    displayValue: currentDisplayValue,
+    firstOperand,
+    secondOperand,
+    operator,
+  } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
-  const currentDisplayValue = useAppSelector((state) => state.app.displayValue);
-  const firstOperand = useAppSelector((state) => state.app.firstOperand);
-  const secondOperand = useAppSelector((state) => state.app.secondOperand);
-  const operator = useAppSelector((state) => state.app.operator);
 
   function handleClick() {
     if (firstOperand && !secondOperand) {
@@ -58,7 +60,6 @@ function CalcEqual() {
         }
       }
       const roundedResult = roundResult(result);
-
       dispatch(updateDisplayValue(replaceDotWithComma(roundedResult.toString())));
       dispatch(updateCurrentValue(roundedResult.toString()));
     }

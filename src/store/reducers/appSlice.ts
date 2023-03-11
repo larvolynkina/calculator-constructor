@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Mode } from '../../const';
 import ICalcBlocks from '../../types';
 
-type TinitialState = {
+export type TinitialState = {
   mode: Mode;
   calcBlocks: ICalcBlocks[];
   draggableElement: HTMLElement | null;

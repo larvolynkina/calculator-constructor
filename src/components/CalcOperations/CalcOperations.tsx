@@ -17,10 +17,13 @@ import {
 const operations = ['/', 'x', '-', '+'];
 
 function CalcOperations() {
-  const currentDisplayValue = useAppSelector((state) => state.app.displayValue);
-  const firstOperand = useAppSelector((state) => state.app.firstOperand);
-  const secondOperand = useAppSelector((state) => state.app.secondOperand);
-  const operator = useAppSelector((state) => state.app.operator);
+  const {
+    displayValue: currentDisplayValue,
+    firstOperand,
+    secondOperand,
+    currentValue,
+    operator,
+  } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
   function handleOperationsClick(children: string) {
@@ -30,7 +33,9 @@ function CalcOperations() {
         dispatch(updateFirtsOperand(+replaceCommaWithDot(currentDisplayValue)));
         dispatch(updateCurrentValue(currentDisplayValue));
       }
-    } else if (firstOperand && !secondOperand) {
+    } else if (firstOperand && currentValue) {
+      dispatch(updateOperator(children));
+    } else if (firstOperand && !secondOperand && !currentValue) {
       const { result, roundedResult } = calculateResultWithFirstOperand(
         firstOperand,
         currentDisplayValue,

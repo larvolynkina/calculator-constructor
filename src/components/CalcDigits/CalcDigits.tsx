@@ -6,19 +6,24 @@ import './CalcDigits.scss';
 const digits = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', ','];
 
 function CalcDigits() {
+  const { displayValue: currentDisplayValue, currentValue } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
-  const currentDisplayValue = useAppSelector((state) => state.app.displayValue);
-  const currentValue = useAppSelector((state) => state.app.currentValue);
 
   function handleDigitsClick(children: string) {
     if (!currentValue) {
       if (currentDisplayValue.length === 16) {
         dispatch(updateDisplayValue(currentDisplayValue));
+      } else if (children === ',' && currentDisplayValue === '') {
+        dispatch(updateDisplayValue('0,'));
       } else {
         dispatch(updateDisplayValue(currentDisplayValue + children));
       }
     } else {
-      dispatch(updateDisplayValue(children));
+      if (children === ',' && currentValue) {
+        dispatch(updateDisplayValue('0,'));
+      } else {
+        dispatch(updateDisplayValue(children));
+      }
       dispatch(updateCurrentValue(null));
     }
   }
