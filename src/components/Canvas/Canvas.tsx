@@ -10,7 +10,9 @@ import { handleCanvasWithBlocksDrag, handleCanvasDrop } from './handlers';
 
 function Canvas() {
   const { calcBlocks } = useAppSelector((state) => state.app);
-  const [className, setClassName] = useState('canvas');
+  const [className, setClassName] = useState(
+    calcBlocks.length ? 'canvas canvas--with-blocks' : 'canvas',
+  );
   const dispatch = useAppDispatch();
   const draggableElement = useAppSelector((state) => state.app.draggableElement);
 

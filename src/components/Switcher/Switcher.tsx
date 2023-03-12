@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Switcher.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import {
-  updateMode,
-  updateCurrentValue,
-  updateDisplayValue,
-  updateFirtsOperand,
-  updateSecondOperand,
-  updateOperator,
-} from '../../store/reducers/appSlice';
+import { updateMode, resetCalc } from '../../store/reducers/appSlice';
 
 function Switcher() {
   const mode = useAppSelector((state) => state.app.mode);
@@ -18,11 +11,31 @@ function Switcher() {
   );
   const [calculatorBtnClassName, setCalculatorBtnClassName] = useState('switcher__button');
 
-  function handleClick() {
-    if (mode === 'constructor') {
-      dispatch(updateMode('calculator'));
-    } else {
-      dispatch(updateMode('constructor'));
+  function handleClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const { target } = event;
+
+    if (target instanceof HTMLElement) {
+      if (constructorBtnClassName.includes('active') && !target.className.includes('active')) {
+        dispatch(updateMode('calculator'));
+      }
+      if (calculatorBtnClassName.includes('active') && !target.className.includes('active')) {
+        dispatch(updateMode('constructor'));
+        dispatch(resetCalc());
+      }
+    } else if (target instanceof Element) {
+      if (
+        constructorBtnClassName.includes('active') &&
+        !target.closest('button')?.className.includes('active')
+      ) {
+        dispatch(updateMode('calculator'));
+      }
+      if (
+        calculatorBtnClassName.includes('active') &&
+        !target.closest('button')?.className.includes('active')
+      ) {
+        dispatch(updateMode('constructor'));
+        dispatch(resetCalc());
+      }
     }
   }
 
@@ -30,11 +43,6 @@ function Switcher() {
     if (mode === 'constructor') {
       setConstructorBtnClassName('switcher__button switcher__button--active');
       setCalculatorBtnClassName('switcher__button');
-      dispatch(updateCurrentValue(null));
-      dispatch(updateDisplayValue(''));
-      dispatch(updateFirtsOperand(null));
-      dispatch(updateSecondOperand(null));
-      dispatch(updateOperator(null));
     } else {
       setConstructorBtnClassName('switcher__button');
       setCalculatorBtnClassName('switcher__button switcher__button--active');
@@ -77,7 +85,7 @@ function Switcher() {
         <button
           type="button"
           className={constructorBtnClassName}
-          id="runtime"
+          id="constructor"
           onClick={handleClick}
         >
           <svg

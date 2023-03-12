@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Constructor from './views/Constructor';
 import Runtime from './views/Runtime';
 import { useAppSelector } from './hooks/redux';
@@ -7,16 +6,11 @@ import Switcher from './components/Switcher';
 
 function App() {
   const appMode = useAppSelector((state) => state.app.mode);
-  const [mode, setMode] = useState<Mode>(appMode);
-
-  useEffect(() => {
-    setMode(appMode);
-  }, [appMode]);
 
   return (
     <div className="app">
       <Switcher />
-      {mode === Mode.build ? <Constructor /> : <Runtime />}
+      {appMode === Mode.build ? <Constructor /> : <Runtime />}
     </div>
   );
 }
