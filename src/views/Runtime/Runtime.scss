@@ -4,9 +4,15 @@
     margin-top: 30px;
     display: flex;
     justify-content: flex-end;
+    @media screen and (max-width: 570px) {
+        justify-content: center;
+    }
 
     &__blocks {
         width: 45%;
+        @media screen and (max-width: 570px) {
+            width: 235px;
+        }
 
         .calc-block {
             background: none;

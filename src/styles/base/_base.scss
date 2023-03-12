@@ -10,4 +10,11 @@ body {
     max-width: 539px;
     margin: 0 auto;
     padding: 100px 80px 100px 76px;
+    @media screen and (max-width: 695px) {
+        padding: 100px 15px;
+    }
+    @media screen and (max-width: 570px) {
+        width: unset;
+        max-width: unset;
+    }
 }
