@@ -86,35 +86,37 @@ export function handleCanvasDrop(
   } else if (
     id.includes('canvas') &&
     id !== 'display-canvas' &&
-    target.id.includes('canvas') &&
+    (target.id.includes('canvas') || target.className.includes('canvas--with-blocks')) &&
     target.id !== id
   ) {
     const targetIndex = calcBlocks.findIndex((item) => item.id === target.id);
     const draggableIndex = calcBlocks.findIndex((item) => item.id === id);
     const calcBlocksCopy = [...calcBlocks];
-    const draggable = allCalcBlocks.filter((item) => id.includes(item.id));
-    const targetElement = allCalcBlocks.filter((item) => target.id.includes(item.id));
+    const draggable = calcBlocks.filter((item) => id.includes(item.id));
 
-    if (!target.id.includes('display')) {
-      if (
-        (targetIndex - draggableIndex === 1 && event.clientY > targetCenter) ||
-        (draggableIndex - targetIndex === 1 && event.clientY < targetCenter)
-      ) {
-        calcBlocksCopy[draggableIndex] = { element: targetElement[0].element, id: target.id };
-        calcBlocksCopy[targetIndex] = { element: draggable[0].element, id };
-        dispatch(updateCalcBlocks(calcBlocksCopy));
+    calcBlocksCopy.splice(draggableIndex, 1);
+    if (target.className.includes('canvas--with-blocks')) {
+      calcBlocksCopy.push(draggable[0]);
+      dispatch(updateCalcBlocks(calcBlocksCopy));
+      handleCanvasWithBlocksDrag(target, 'calc-block', calcBlocks);
+    }
+    if (
+      (!target.id.includes('display') || event.clientY > targetCenter) &&
+      !target.className.includes('canvas--with-blocks')
+    ) {
+      if (event.clientY > targetCenter && draggableIndex > targetIndex) {
+        calcBlocksCopy.splice(targetIndex + 1, 0, draggable[0]);
       }
-      if (targetIndex - draggableIndex === 2 && event.clientY < targetCenter) {
-        dispatch(updateCalcBlocks([calcBlocks[2], calcBlocks[1], calcBlocks[3], calcBlocks[1]]));
+      if (event.clientY > targetCenter && draggableIndex < targetIndex) {
+        calcBlocksCopy.splice(targetIndex, 0, draggable[0]);
       }
-      if (targetIndex - draggableIndex === 2 && event.clientY > targetCenter) {
-        dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[2], calcBlocks[3], calcBlocks[1]]));
+      if (event.clientY < targetCenter && draggableIndex > targetIndex) {
+        calcBlocksCopy.splice(targetIndex, 0, draggable[0]);
       }
-      if (draggableIndex - targetIndex === 2 && event.clientY < targetCenter) {
-        dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]));
+      if (event.clientY < targetCenter && draggableIndex < targetIndex) {
+        calcBlocksCopy.splice(targetIndex - 1, 0, draggable[0]);
       }
-    } else if (draggableIndex - targetIndex === 3 && event.clientY > targetCenter) {
-      dispatch(updateCalcBlocks([calcBlocks[0], calcBlocks[3], calcBlocks[1], calcBlocks[2]]));
+      dispatch(updateCalcBlocks(calcBlocksCopy));
     }
   }
 }

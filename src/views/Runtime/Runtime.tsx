@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
 import CalcBlock from '../../components/CalcBlock/CalcBlock';
 import { useAppSelector } from '../../hooks/redux';
-import ICalcBlocks from '../../types';
 import './Runtime.scss';
 
 function Runtime() {
-  const calcBlocksFromState = useAppSelector((state) => state.app.calcBlocks);
-  const [calcBlocks, setCalcBlocks] = useState<ICalcBlocks[]>(calcBlocksFromState);
-
-  useEffect(() => {
-    setCalcBlocks(calcBlocksFromState);
-  }, [calcBlocksFromState]);
+  const { calcBlocks } = useAppSelector((state) => state.app);
 
   return (
     <div className="calculator">

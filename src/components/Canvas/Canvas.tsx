@@ -3,15 +3,13 @@ import CalcBlock from '../CalcBlock/CalcBlock';
 import CalcDisplay from '../CalcDisplay';
 import './Canvas.scss';
 import CanvasPrompt from './CanvasPrompt';
-import ICalcBlocks from '../../types';
 import { updateCalcBlocks } from '../../store/reducers/appSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { allCalcBlocks } from '../../views/Constructor/Constructor';
 import { handleCanvasWithBlocksDrag, handleCanvasDrop } from './handlers';
 
 function Canvas() {
-  const calcBlocksFromState = useAppSelector((state) => state.app.calcBlocks);
-  const [calcBlocks, setCalcBlocks] = useState<ICalcBlocks[]>(calcBlocksFromState);
+  const { calcBlocks } = useAppSelector((state) => state.app);
   const [className, setClassName] = useState('canvas');
   const dispatch = useAppDispatch();
   const draggableElement = useAppSelector((state) => state.app.draggableElement);
@@ -89,10 +87,6 @@ function Canvas() {
       setClassName('canvas');
     }
   }, [calcBlocks]);
-
-  useEffect(() => {
-    setCalcBlocks(calcBlocksFromState);
-  }, [calcBlocksFromState]);
 
   return (
     <div
