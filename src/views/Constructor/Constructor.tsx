@@ -1,5 +1,5 @@
 import './Constructor.scss';
-import CalcBlock from '../../components/CalcBlock/CalcBlock';
+import DraggableBlock from 'shared/ui/draggableBlock';
 import Canvas from '../../components/Canvas';
 import CalcDisplay from '../../components/CalcDisplay';
 import CalcDigits from '../../components/CalcDigits';
@@ -32,9 +32,9 @@ function Constructor() {
       <div className="constructor__wrapper">
         <div className="constructor__blocks">
           {allCalcBlocks.map(({ element, id }) => (
-            <CalcBlock draggable id={id} key={id}>
+            <DraggableBlock draggable id={id} key={id}>
               {element}
-            </CalcBlock>
+            </DraggableBlock>
           ))}
         </div>
         <div className="constructor__canvas">

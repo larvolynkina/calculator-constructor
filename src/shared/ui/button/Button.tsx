@@ -1,21 +1,28 @@
 import { ButtonHTMLAttributes } from 'react';
+import cn from 'classnames';
 import './button.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textContent: string;
-  className?: string;
+  modifier?: string;
 }
 
-function Button({ textContent, className, ...restProps }: ButtonProps) {
+function Button({ textContent, modifier, ...restProps }: ButtonProps) {
   return (
-    <button className={className} type="button" {...restProps}>
+    <button
+      className={cn('button', {
+        [`button--${modifier}`]: modifier,
+      })}
+      type="button"
+      {...restProps}
+    >
       {textContent}
     </button>
   );
 }
 
 Button.defaultProps = {
-  className: 'button',
+  modifier: '',
 };
 
 export default Button;

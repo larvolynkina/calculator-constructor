@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CalcBlock from '../CalcBlock/CalcBlock';
+import DraggableBlock from 'shared/ui/draggableBlock';
 import CalcDisplay from '../CalcDisplay';
 import './Canvas.scss';
 import CanvasPrompt from './CanvasPrompt';
@@ -100,9 +100,9 @@ function Canvas() {
     >
       {calcBlocks.length ? (
         calcBlocks.map(({ element, id }) => (
-          <CalcBlock draggable id={id} key={id}>
+          <DraggableBlock draggable id={id} key={id}>
             {element}
-          </CalcBlock>
+          </DraggableBlock>
         ))
       ) : (
         <CanvasPrompt />

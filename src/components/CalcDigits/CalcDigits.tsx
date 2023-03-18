@@ -37,10 +37,10 @@ function CalcDigits() {
     <div className="digits">
       {digits.map((item) => (
         <Button
-          onClick={(event) => handleDigitsClick(event)}
-          key={item}
-          className={item === '0' ? 'button digits__zero' : 'button'}
           textContent={item}
+          modifier={item === '0' ? 'zero' : ''}
+          key={item}
+          onClick={(event) => handleDigitsClick(event)}
         />
       ))}
     </div>

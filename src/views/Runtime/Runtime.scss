@@ -21,8 +21,9 @@
             cursor: unset;
             pointer-events: unset;
 
-            .equal {
+            .button--equal {
                 cursor: pointer;
+                pointer-events: unset;
             }
 
             .digits,

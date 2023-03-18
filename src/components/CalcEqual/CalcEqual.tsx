@@ -1,4 +1,4 @@
-import './CalcEqual.scss';
+import Button from 'shared/ui/button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   updateDisplayValue,
@@ -66,9 +66,9 @@ function CalcEqual() {
   }
 
   return (
-    <button type="button" className="equal" onClick={handleClick}>
-      =
-    </button>
+    <div className="equal">
+      <Button modifier="equal" onClick={() => handleClick()} textContent="=" />
+    </div>
   );
 }
 

@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
-import React, { useState, useEffect } from 'react';
-import './CalcBlock.scss';
-import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { updateDraggbleElement } from '../../store/reducers/appSlice';
+import React, { useState, useEffect, PropsWithChildren } from 'react';
+import './draggableBlock.scss';
+import cn from 'classnames';
+import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
+import { updateDraggbleElement } from '../../../store/reducers/appSlice';
 
-interface CalcBlockProps {
-  children: React.ReactNode;
+interface DraggableBlockProps {
   draggable: boolean;
   id: string;
 }
 
-function CalcBlock({ children, draggable, id }: CalcBlockProps) {
+function DraggableBlock({ children, draggable, id }: PropsWithChildren<DraggableBlockProps>) {
   const [className, setClassName] = useState('calc-block');
   const [isDraggable, setIsDraggable] = useState(draggable);
   const calcBlocks = useAppSelector((state) => state.app.calcBlocks);
@@ -70,4 +70,4 @@ function CalcBlock({ children, draggable, id }: CalcBlockProps) {
   );
 }
 
-export default CalcBlock;
+export default DraggableBlock;
