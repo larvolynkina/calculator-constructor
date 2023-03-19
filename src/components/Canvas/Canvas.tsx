@@ -100,7 +100,12 @@ function Canvas() {
     >
       {calcBlocks.length ? (
         calcBlocks.map(({ element, id }) => (
-          <DraggableBlock draggable id={id} key={id}>
+          <DraggableBlock
+            draggable={!id.includes('display')}
+            id={id}
+            key={id}
+            modifier={id.includes('display') ? 'no-grab' : ''}
+          >
             {element}
           </DraggableBlock>
         ))
