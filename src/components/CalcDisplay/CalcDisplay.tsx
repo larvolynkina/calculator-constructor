@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import cn from 'classnames';
 import { useAppSelector } from '../../hooks/redux';
 import './CalcDisplay.scss';
 
 function CalcDisplay() {
   const displayValue = useAppSelector((state) => state.app.displayValue);
   const [value, setValue] = useState('0');
-  const [className, setClassName] = useState('display');
 
   useEffect(() => {
     if (displayValue) {
@@ -14,21 +14,20 @@ function CalcDisplay() {
       } else {
         setValue(displayValue);
       }
-      if (displayValue.length > 12) {
-        if (displayValue.includes('e') || displayValue.length > 18) {
-          setClassName('display display--calc-mini15px');
-        } else {
-          setClassName('display display--calc-mini');
-        }
-      } else {
-        setClassName('display display--calc');
-      }
-    } else {
-      setClassName('display');
     }
   }, [displayValue]);
 
-  return <div className={className}>{value}</div>;
+  return (
+    <div
+      className={cn('display', {
+        'display--calc': displayValue && displayValue.length <= 12,
+        'display--calc-mini': displayValue.length > 12 && displayValue.length <= 18,
+        'display--calc-mini15px': displayValue.includes('e') || displayValue.length > 18,
+      })}
+    >
+      {value}
+    </div>
+  );
 }
 
 export default CalcDisplay;

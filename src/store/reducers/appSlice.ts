@@ -36,6 +36,11 @@ const appSlice = createSlice({
     },
     updateMode(state, action) {
       state.mode = action.payload;
+      state.currentValue = null;
+      state.displayValue = '';
+      state.firstOperand = null;
+      state.secondOperand = null;
+      state.operator = null;
     },
     updateCurrentValue(state, action) {
       state.currentValue = action.payload;
@@ -52,13 +57,6 @@ const appSlice = createSlice({
     updateOperator(state, action) {
       state.operator = action.payload;
     },
-    resetCalc(state) {
-      state.currentValue = null;
-      state.displayValue = '';
-      state.firstOperand = null;
-      state.secondOperand = null;
-      state.operator = null;
-    },
   },
 });
 
@@ -71,7 +69,6 @@ export const {
   updateFirtsOperand,
   updateSecondOperand,
   updateOperator,
-  resetCalc,
 } = appSlice.actions;
 
 export default appSlice.reducer;
