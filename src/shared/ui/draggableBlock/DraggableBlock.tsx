@@ -2,8 +2,8 @@
 import React, { PropsWithChildren } from 'react';
 import './draggableBlock.scss';
 import cn from 'classnames';
-import { useAppDispatch } from '../../../hooks/redux';
-import { updateDraggbleElement } from '../../../store/reducers/appSlice';
+import { calcModel } from 'entities/calc-blocks';
+import { useAppDispatch } from '../../lib/hooks/redux';
 
 interface DraggableBlockProps {
   draggable: boolean;
@@ -21,7 +21,7 @@ function DraggableBlock({
 
   function handleDragStart(event: React.DragEvent<HTMLDivElement>) {
     const target = event.target as HTMLElement;
-    dispatch(updateDraggbleElement(target));
+    dispatch(calcModel.updateDraggbleElement(target));
     event.dataTransfer.setData('id', id);
   }
 

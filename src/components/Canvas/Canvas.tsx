@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import DraggableBlock from 'shared/ui/draggableBlock';
-import CalcDisplay from '../CalcDisplay';
+import { calcModel } from 'entities/calc-blocks';
+import CalcDisplay from 'entities/calc-blocks/ui/CalcDisplay';
 import './Canvas.scss';
 import CanvasPrompt from './CanvasPrompt';
-import { updateCalcBlocks } from '../../store/reducers/appSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { allCalcBlocks } from '../../views/Constructor/Constructor';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks/redux';
 import { handleCanvasWithBlocksDrag, handleCanvasDrop } from './handlers';
 
 function Canvas() {
-  const { calcBlocks } = useAppSelector((state) => state.app);
+  const { calcBlocks } = useAppSelector((state) => state.calc);
   const [className, setClassName] = useState(
     calcBlocks.length ? 'canvas canvas--with-blocks' : 'canvas',
   );
   const dispatch = useAppDispatch();
-  const draggableElement = useAppSelector((state) => state.app.draggableElement);
+  const draggableElement = useAppSelector((state) => state.calc.draggableElement);
 
   function handleDragOver(event: React.DragEvent<HTMLDivElement>) {
     event.preventDefault();
@@ -60,7 +59,7 @@ function Canvas() {
       targetCenter,
       calcBlocks,
       <CalcDisplay />,
-      allCalcBlocks,
+      calcModel.allCalcBlocks,
       dispatch,
     );
     if (target.id.includes('display')) {
@@ -78,7 +77,7 @@ function Canvas() {
           !item.id.startsWith(target.className) &&
           !item.id.startsWith(target.closest('div')?.className || ''),
       );
-      dispatch(updateCalcBlocks(filteredArray));
+      dispatch(calcModel.updateCalcBlocks(filteredArray));
     }
   }
 

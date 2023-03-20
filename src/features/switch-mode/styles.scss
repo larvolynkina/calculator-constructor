@@ -1,0 +1,39 @@
+@import 'shared/styles/abstracts/variables.scss';
+
+.switcher {
+    display: flex;
+    justify-content: flex-end;
+    @media screen and (max-width: 570px) {
+        justify-content: center;
+    }
+
+    &__wrapper {
+        background: #F3F4F6;
+        border-radius: 6px;
+        display: flex;
+        width: 45%;
+        @media screen and (max-width: 570px) {
+            width: unset;
+        }
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        color: #4D5562;
+        font-weight: 500;
+        line-height: 15px;
+        gap: 8px;
+        padding: 8px 12px;
+
+        &--active {
+            background: #FFFFFF;
+            border: 1px solid #E2E3E5;
+            border-radius: 5px;
+
+            svg path {
+                stroke: $main-color;
+            }
+        }
+    }
+}

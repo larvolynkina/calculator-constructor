@@ -1,4 +1,4 @@
-import { MAX_DISPLAY_VALUE_LENGTH } from './const';
+import { MAX_DISPLAY_VALUE_LENGTH } from "shared/config";
 
 export function replaceCommaWithDot(value: string) {
   return value.replace(',', '.');

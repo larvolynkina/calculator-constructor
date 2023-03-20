@@ -1,21 +1,21 @@
+/* eslint-disable no-undef */
 import React, { ReactElement } from 'react';
 import { ThunkDispatch, AnyAction, Dispatch } from '@reduxjs/toolkit';
-import ICalcBlocks from '../../types';
-import { updateCalcBlocks, TinitialState } from '../../store/reducers/appSlice';
+import { calcModel, ICalcBlock } from 'entities/calc-blocks';
 
-type TDispatch = ThunkDispatch<
-  {
-    app: TinitialState;
-  },
-  undefined,
-  AnyAction
-> &
-  Dispatch<AnyAction>;
+// type TDispatch = ThunkDispatch<
+//   {
+//     calc: TinitialState;
+//   },
+//   undefined,
+//   AnyAction
+// > &
+//   Dispatch<AnyAction>;
 
 export function handleCanvasWithBlocksDrag(
   target: HTMLElement,
   childclassName: string,
-  calcBlocks: ICalcBlocks[],
+  calcBlocks: ICalcBlock[],
 ) {
   if (
     target.className.includes('canvas--with-blocks') &&
@@ -34,18 +34,18 @@ export function handleCanvasDrop(
   target: HTMLElement,
   event: React.DragEvent<HTMLDivElement>,
   targetCenter: number,
-  calcBlocks: ICalcBlocks[],
+  calcBlocks: ICalcBlock[],
   element: ReactElement,
-  allCalcBlocks: ICalcBlocks[],
-  dispatch: TDispatch,
+  allCalcBlocks: ICalcBlock[],
+  dispatch: AppDispatch,
 ) {
   if (id === 'display') {
-    dispatch(updateCalcBlocks([{ element, id: 'display-canvas' }, ...calcBlocks]));
+    dispatch(calcModel.updateCalcBlocks([{ element, id: 'display-canvas' }, ...calcBlocks]));
     handleCanvasWithBlocksDrag(target, 'calc-block', calcBlocks);
   } else if ((id === 'digits' || id === 'operations' || id === 'equal') && !calcBlocks.length) {
     const currentBlock = allCalcBlocks.find((item) => item.id === id);
     if (currentBlock) {
-      dispatch(updateCalcBlocks([{ element: currentBlock.element, id: `${id}-canvas` }]));
+      dispatch(calcModel.updateCalcBlocks([{ element: currentBlock.element, id: `${id}-canvas` }]));
     }
   } else if (
     (id === 'digits' || id === 'operations' || id === 'equal') &&
@@ -64,7 +64,7 @@ export function handleCanvasDrop(
         calcBlocksCopy.splice(index, 0, { element: currentBlock.element, id: `${id}-canvas` });
       }
     }
-    dispatch(updateCalcBlocks(calcBlocksCopy));
+    dispatch(calcModel.updateCalcBlocks(calcBlocksCopy));
   } else if (
     (id === 'digits' || id === 'operations' || id === 'equal') &&
     target.className.includes('canvas--with-blocks')
@@ -80,7 +80,7 @@ export function handleCanvasDrop(
         }
       }
       dispatch(
-        updateCalcBlocks([...calcBlocks, { element: currentBlock.element, id: `${id}-canvas` }]),
+        calcModel.updateCalcBlocks([...calcBlocks, { element: currentBlock.element, id: `${id}-canvas` }]),
       );
     }
   } else if (
@@ -97,7 +97,7 @@ export function handleCanvasDrop(
     calcBlocksCopy.splice(draggableIndex, 1);
     if (target.className.includes('canvas--with-blocks')) {
       calcBlocksCopy.push(draggable[0]);
-      dispatch(updateCalcBlocks(calcBlocksCopy));
+      dispatch(calcModel.updateCalcBlocks(calcBlocksCopy));
       handleCanvasWithBlocksDrag(target, 'calc-block', calcBlocks);
     }
     if (
@@ -116,7 +116,7 @@ export function handleCanvasDrop(
       if (event.clientY < targetCenter && draggableIndex < targetIndex) {
         calcBlocksCopy.splice(targetIndex - 1, 0, draggable[0]);
       }
-      dispatch(updateCalcBlocks(calcBlocksCopy));
+      dispatch(calcModel.updateCalcBlocks(calcBlocksCopy));
     }
   }
 }
