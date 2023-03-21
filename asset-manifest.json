@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/calculator-constructor/static/css/main.83ccbf37.css",
-    "main.js": "/calculator-constructor/static/js/main.cf466f76.js",
+    "main.css": "/calculator-constructor/static/css/main.476c7b2b.css",
+    "main.js": "/calculator-constructor/static/js/main.1a011ea0.js",
     "static/media/no-grab.svg": "/calculator-constructor/static/media/no-grab.c0b9ba2ddb3a2261c77a.svg",
     "static/media/drag.svg": "/calculator-constructor/static/media/drag.ff2a0d409c14819260b0.svg",
+    "static/media/eye.svg": "/calculator-constructor/static/media/eye.1e033d8501f85bfd21633e578c03792e.svg",
     "index.html": "/calculator-constructor/index.html",
+    "static/media/selector.svg": "/calculator-constructor/static/media/selector.40dc10876101ac38240b7a55c8211b97.svg",
     "static/media/line.svg": "/calculator-constructor/static/media/line.9ea9e9f8fcda458ea456.svg",
-    "main.83ccbf37.css.map": "/calculator-constructor/static/css/main.83ccbf37.css.map",
-    "main.cf466f76.js.map": "/calculator-constructor/static/js/main.cf466f76.js.map"
+    "main.476c7b2b.css.map": "/calculator-constructor/static/css/main.476c7b2b.css.map",
+    "main.1a011ea0.js.map": "/calculator-constructor/static/js/main.1a011ea0.js.map"
   },
   "entrypoints": [
-    "static/css/main.83ccbf37.css",
-    "static/js/main.cf466f76.js"
+    "static/css/main.476c7b2b.css",
+    "static/js/main.1a011ea0.js"
   ]
 }
