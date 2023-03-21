@@ -1,8 +1,8 @@
 import './index.scss';
 import { useAppSelector } from 'shared/lib/hooks/redux';
-import DraggableBlock from 'shared/ui/draggableBlock';
+import { DraggableBlock } from 'shared/ui';
 import { calcModel } from 'entities/calc-blocks';
-import Canvas from '../../components/Canvas';
+import Canvas from './ui/canvas';
 import isCalcBlockCopied from './lib';
 
 function ConstructCalc() {

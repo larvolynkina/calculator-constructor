@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 import cn from 'classnames';
-import './button.scss';
+import './index.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textContent: string;

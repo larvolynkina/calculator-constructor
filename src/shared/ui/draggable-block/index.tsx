@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import React, { PropsWithChildren } from 'react';
-import './draggableBlock.scss';
+import './index.scss';
 import cn from 'classnames';
 import { calcModel } from 'entities/calc-blocks';
 import { useAppDispatch } from '../../lib/hooks/redux';

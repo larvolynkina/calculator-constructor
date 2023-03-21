@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import DraggableBlock from 'shared/ui/draggableBlock';
+import { DraggableBlock } from 'shared/ui';
 import { calcModel } from 'entities/calc-blocks';
 import CalcDisplay from 'entities/calc-blocks/ui/CalcDisplay';
-import './Canvas.scss';
+import './index.scss';
+import { useAppDispatch, useAppSelector } from 'shared/lib/hooks/redux';
 import CanvasPrompt from './CanvasPrompt';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks/redux';
-import { handleCanvasWithBlocksDrag, handleCanvasDrop } from './handlers';
+import { handleCanvasWithBlocksDrag, handleCanvasDrop } from '../../../model/canvas';
 
 function Canvas() {
   const { calcBlocks } = useAppSelector((state) => state.calc);

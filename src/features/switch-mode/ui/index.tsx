@@ -1,7 +1,7 @@
-import './styles.scss';
+import './index.scss';
 import cn from 'classnames';
 import { calcModel } from 'entities/calc-blocks';
-import { useAppSelector, useAppDispatch } from '../../shared/lib/hooks/redux';
+import { useAppSelector, useAppDispatch } from 'shared/lib/hooks/redux';
 import { ReactComponent as RuntimeIco } from './assets/icons/eye.svg';
 import { ReactComponent as ConstructorIco } from './assets/icons/selector.svg';
 

@@ -50,7 +50,7 @@ const initialState: TinitialState = {
   calcBlocks: [],
   draggableElement: null,
   currentValue: null,
-  displayValue: '',
+  displayValue: '0',
   firstOperand: null,
   secondOperand: null,
   operator: null,
@@ -69,7 +69,7 @@ export const calcSlice = createSlice({
     updateMode(state, action) {
       state.mode = action.payload;
       state.currentValue = null;
-      state.displayValue = '';
+      state.displayValue = '0';
       state.firstOperand = null;
       state.secondOperand = null;
       state.operator = null;

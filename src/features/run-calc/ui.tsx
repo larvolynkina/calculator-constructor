@@ -1,4 +1,4 @@
-import DraggableBlock from 'shared/ui/draggableBlock';
+import { DraggableBlock } from 'shared/ui';
 import { useAppSelector } from 'shared/lib/hooks/redux';
 import './index.scss';
 
