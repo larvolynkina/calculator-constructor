@@ -1,9 +1,10 @@
 import { DraggableBlock } from 'shared/ui';
 import { useAppSelector } from 'shared/lib/hooks/redux';
+import { calcModel } from 'entities/calc-blocks';
 import './index.scss';
 
 function RunCalc() {
-  const { calcBlocks } = useAppSelector((state) => state.calc);
+  const { calcBlocks } = useAppSelector(calcModel.selectState);
 
   return (
     <div className="calculator">

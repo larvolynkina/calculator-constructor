@@ -6,7 +6,7 @@ import { ReactComponent as RuntimeIco } from './assets/icons/eye.svg';
 import { ReactComponent as ConstructorIco } from './assets/icons/selector.svg';
 
 function SwitchMode() {
-  const mode = useAppSelector((state) => state.calc.mode);
+  const { mode } = useAppSelector(calcModel.selectState);
   const dispatch = useAppDispatch();
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { calcModel } from 'entities/calc-blocks';
 import { DraggableBlock } from 'shared/ui';
 import './index.scss';
 import { useAppDispatch, useAppSelector } from 'shared/lib/hooks/redux';
@@ -9,10 +10,10 @@ import {
   handleCanvasDrop,
   deleteBlockFromCanvas,
   showPlaceToInsert,
-} from '../../../model/canvas';
+} from '../../../model';
 
 function Canvas() {
-  const { calcBlocks } = useAppSelector((state) => state.calc);
+  const { calcBlocks } = useAppSelector(calcModel.selectState);
   const [dragOver, setDragOver] = useState(false);
   const dispatch = useAppDispatch();
 

@@ -6,7 +6,7 @@ import Canvas from './canvas';
 import isCalcBlockCopied from '../lib';
 
 function ConstructCalc() {
-  const calcBlocks = useAppSelector((state) => state.calc.calcBlocks);
+  const { calcBlocks } = useAppSelector(calcModel.selectState);
 
   return (
     <div className="constructor">

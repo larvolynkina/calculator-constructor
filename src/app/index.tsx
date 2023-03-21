@@ -6,7 +6,7 @@ import SwitchMode from '../features/switch-mode';
 import './styles/index.scss';
 
 function App() {
-  const mode = useAppSelector((state) => state.calc.mode);
+  const { mode } = useAppSelector(calcModel.selectState);
 
   return (
     <div className="app">

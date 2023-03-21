@@ -1,9 +1,10 @@
 import cn from 'classnames';
 import { useAppSelector } from 'shared/lib/hooks/redux';
-import './CalcDisplay.scss';
+import { calcModel } from 'entities/calc-blocks';
+import './index.scss';
 
-function CalcDisplay() {
-  const displayValue = useAppSelector((state) => state.calc.displayValue);
+function Display() {
+  const { displayValue } = useAppSelector(calcModel.selectState);
 
   return (
     <div
@@ -18,4 +19,4 @@ function CalcDisplay() {
   );
 }
 
-export default CalcDisplay;
+export default Display;
