@@ -1,4 +1,4 @@
-@import 'shared/ui/styles/abstracts/variables.scss';
+@import 'shared/styles/abstracts/variables.scss';
 
 .canvas {
     border: 2px dashed #C4C4C4;
@@ -8,10 +8,11 @@
     align-items: center;
     justify-content: center;
     min-height: 480px;
+
     @media screen and (max-width: 470px) {
         min-height: 415px;
     }
-    
+
 
     &__prompt {
         text-align: center;
@@ -53,6 +54,7 @@
         background: none;
         box-shadow: none;
         padding: 8px 4px;
+
         @media screen and (max-width: 470px) {
             padding: 4px;
         }

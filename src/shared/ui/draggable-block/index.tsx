@@ -2,8 +2,6 @@
 import React, { PropsWithChildren } from 'react';
 import './index.scss';
 import cn from 'classnames';
-import { calcModel } from 'entities/calc-blocks';
-import { useAppDispatch } from '../../lib/hooks/redux';
 
 interface DraggableBlockProps {
   draggable: boolean;
@@ -17,11 +15,7 @@ function DraggableBlock({
   id,
   modifier,
 }: PropsWithChildren<DraggableBlockProps>) {
-  const dispatch = useAppDispatch();
-
   function handleDragStart(event: React.DragEvent<HTMLDivElement>) {
-    const target = event.target as HTMLElement;
-    dispatch(calcModel.updateDraggbleElement(target));
     event.dataTransfer.setData('id', id);
   }
 

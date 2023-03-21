@@ -37,7 +37,6 @@ export const allCalcBlocks: ICalcBlock[] = [
 export type TinitialState = {
   mode: Mode;
   calcBlocks: ICalcBlock[];
-  draggableElement: HTMLElement | null;
   currentValue: string | null;
   displayValue: string;
   firstOperand: number | null;
@@ -48,7 +47,6 @@ export type TinitialState = {
 const initialState: TinitialState = {
   mode: Mode.build,
   calcBlocks: [],
-  draggableElement: null,
   currentValue: null,
   displayValue: '0',
   firstOperand: null,
@@ -62,9 +60,6 @@ export const calcSlice = createSlice({
   reducers: {
     updateCalcBlocks(state, action) {
       state.calcBlocks = action.payload;
-    },
-    updateDraggbleElement(state, action) {
-      state.draggableElement = action.payload;
     },
     updateMode(state, action) {
       state.mode = action.payload;
@@ -94,7 +89,6 @@ export const calcSlice = createSlice({
 
 export const {
   updateCalcBlocks,
-  updateDraggbleElement,
   updateMode,
   updateCurrentValue,
   updateDisplayValue,
